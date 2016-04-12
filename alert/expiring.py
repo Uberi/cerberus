@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -133,7 +135,7 @@ def email_histogram_subscribers(current_date, target_date, notifiable_histograms
             email_body = (
                 "The following histograms will be expiring on {}, and should be removed from the codebase, or have their expiry versions updated:\n\n{}\n\n"
                 "The following histograms are expired as of {}:\n\n{}\n\n"
-                "This is an automated message sent by Cerberus. See https://github.com/mozilla/cerberus for details and source code."
+                "This is an automated message sent by Cerberus. See https://github.com/mozilla/cerberus for details and source code.\n"
             ).format(target_date, expiring_list, current_date, expired_list)
         if dry_run:
             print("Email notification for {}:\n===============================================\n{}\n===============================================\n".format(email, email_body))
@@ -241,7 +243,7 @@ def main():
     else:
         now = date.today()
     
-    # get a list of histograms that are expiring and net yet notified about, sorted alphabetically
+    # get a list of histograms that are expiring and not yet notified about, sorted alphabetically
     with open(HISTOGRAMS_FILE) as f: histograms = json.load(f)
     release_dates = get_release_dates()
     target_date, target_date_sheriff = now + EMAIL_TIME_BEFORE, now + EMAIL_TIME_BEFORE_SHERIFF
